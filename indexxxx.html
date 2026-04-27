@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>GRE Vocabulary Builder | 100 Essential Words by Risma Fadillah</title>
+    <meta name="description" content="Master 100 essential GRE vocabulary words with this interactive quiz. Created by Risma Fadillah to help students improve verbal reasoning skills with gamified streaks.">
+    <meta name="keywords" content="GRE Vocabulary, GRE Study Tool, GRE Prep, Risma Fadillah, English Vocabulary Quiz, Essential GRE Words">
+    <meta name="author" content="Risma Fadillah">
+    <meta property="og:title" content="GRE Vocabulary Master - Interactive Learning by Risma Fadillah">
+    <meta property="og:description" content="Boost your GRE score with my interactive 100-word vocabulary builder. Track your streak and master essential words.">
+    <meta property="og:type" content="website">
+
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --bg: #f4f7f6;
+            --card-bg: #ffffff;
+            --text: #333;
+            --gold: #f1c40f;
+        }
+
+        .dark-mode {
+            --bg: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --text: #f4f7f6;
+            --primary: #ecf0f1;
+        }
+
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); margin: 0; color: var(--text); transition: 0.3s; }
+        
+        header { 
+            background: linear-gradient(135deg, #2c3e50, #4ca1af); 
+            color: white; padding: 3rem 1rem; text-align: center; position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .dark-toggle {
+            position: absolute; top: 20px; right: 20px;
+            background: rgba(255,255,255,0.2); border: none; padding: 8px 15px;
+            border-radius: 20px; color: white; cursor: pointer; font-size: 0.8rem;
+        }
+
+        header h1 { margin: 0; font-size: 2.2rem; }
+        .author { font-style: italic; opacity: 0.9; display: block; font-weight: 300; margin-top: 5px; }
+        
+        nav { margin-top: 25px; }
+        nav button { 
+            background: rgba(255, 255, 255, 0.1); color: white; border: 1px solid white; 
+            padding: 10px 25px; margin: 5px; cursor: pointer; border-radius: 30px; font-weight: bold; transition: 0.3s;
+        }
+        nav button:hover { background: white; color: #2c3e50; }
+
+        #main-content { padding: 30px 20px; max-width: 1000px; margin: auto; }
+        
+        .progress-container { width: 100%; background: #ddd; height: 8px; border-radius: 10px; margin-bottom: 25px; overflow: hidden; }
+        #progress-bar { width: 0%; height: 100%; background: var(--success); transition: 0.5s; }
+
+        #searchBar { 
+            width: 100%; padding: 15px; margin-bottom: 30px; border: none; border-radius: 12px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); font-size: 1rem; background: var(--card-bg); color: var(--text); outline: none;
+        }
+
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        
+        .word-card { 
+            background: var(--card-bg); padding: 25px; border-radius: 15px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s;
+            border-left: 5px solid var(--secondary);
+        }
+        .word-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .word-card h3 { margin-top: 0; color: var(--secondary); font-size: 1.4rem; }
+
+        .quiz-container { 
+            background: var(--card-bg); padding: 40px; border-radius: 20px; text-align: center; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 600px; margin: auto; 
+        }
+
+        .streak-badge {
+            background: var(--gold); color: #000; padding: 6px 20px; border-radius: 25px;
+            font-weight: bold; margin-bottom: 20px; display: inline-block; animation: pulse 2s infinite;
+        }
+
+        .options-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 25px; }
+        @media (min-width: 600px) { .options-grid { grid-template-columns: 1fr 1fr; } }
+        
+        .option-btn { 
+            padding: 18px; border: 1px solid #ddd; background: var(--card-bg); 
+            color: var(--text); cursor: pointer; border-radius: 12px; transition: 0.2s; font-size: 0.95rem;
+        }
+        .option-btn:hover { border-color: var(--secondary); background: rgba(52, 152, 219, 0.1); }
+        
+        .correct { background-color: var(--success) !important; color: white; border: none; animation: pop 0.3s; }
+        .wrong { background-color: var(--danger) !important; color: white; border: none; animation: shake 0.3s; }
+
+        @keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+
+        #next-btn { 
+            margin-top: 25px; padding: 12px 40px; background: var(--primary); 
+            color: white; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; font-size: 1rem;
+        }
+
+        .footer-about { margin-top: 60px; padding: 30px; border-top: 1px solid #ddd; font-size: 0.95rem; line-height: 1.6; color: #666; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="dark-toggle" onclick="toggleDarkMode()">🌓 Toggle Mode</button>
+        <h1>GRE Vocabulary Builder</h1>
+        <span class="author">Mastering 100 Essential GRE Words by <b>Risma Fadillah</b></span>
+        <nav>
+            <button onclick="showSection('list')">Word List</button>
+            <button onclick="showSection('quiz')">Daily Challenge</button>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <div class="progress-container"><div id="progress-bar"></div></div>
+        
+        <section id="list-section">
+            <input type="text" id="searchBar" placeholder="Search words or definitions..." onkeyup="filterWords()">
+            <div id="wordList" class="grid-container"></div>
+        </section>
+
+        <section id="quiz-section" style="display:none;">
+            <div class="quiz-container">
+                <div class="streak-badge">🔥 Current Streak: <span id="streak-count">0</span></div>
+                <p style="color: #888; font-weight: bold; margin-bottom: 5px;">WHAT IS THE MEANING OF:</p>
+                <h2 id="quiz-word" style="font-size: 2.2rem; margin: 0 0 20px 0;">WORD</h2>
+                <div id="answer-options" class="options-grid"></div>
+                <div id="feedback" style="margin-top: 20px; font-weight: bold; font-size: 1.1rem;"></div>
+                <button id="next-btn" onclick="loadNewQuestion()" style="display:none;">Continue Challenge →</button>
+            </div>
+        </section>
+
+        <section class="footer-about">
+            <h2>About this GRE Vocabulary Tool</h2>
+            <p>Welcome to the <strong>GRE Vocabulary Builder</strong>, a project curated by <strong>Risma Fadillah</strong>. Preparing for the GRE Verbal Reasoning section requires a deep understanding of complex English vocabulary. This tool is designed to help students master 100 high-frequency GRE words through a gamified experience.</p>
+            <p>Whether you need an <strong>essential GRE word list</strong> or an interactive <strong>GRE vocabulary quiz</strong>, this app provides a seamless study experience. Challenge yourself, build your streak, and master the language of the GRE.</p>
+        </section>
+    </main>
+
+    <script>
+        const words = [
+            {word: "Abate", meaning: "To become less active, less intense, or less in amount.", sentence: "As the hurricane's force abated, the winds dropped."},
+            {word: "Aberration", meaning: "A departure from what is normal, usual, or expected.", sentence: "The mid-winter heat wave was a climatic aberration."},
+            {word: "Abjure", meaning: "To solemnly renounce a belief, cause, or claim.", sentence: "He abjured his allegiance to the former king."},
+            {word: "Anomalous", meaning: "Deviating from what is standard, normal, or expected.", sentence: "The scientists were baffled by the anomalous results."},
+            {word: "Assuage", meaning: "To make an unpleasant feeling less intense.", sentence: "The government tried to assuage the public's fears."},
+            {word: "Audacious", meaning: "Showing a willingness to take surprisingly bold risks.", sentence: "It was an audacious attempt to seize control."},
+            {word: "Equivocal", meaning: "Open to more than one interpretation; ambiguous.", sentence: "The candidate gave an equivocal answer."},
+            {word: "Lucid", meaning: "Expressed clearly; easy to understand.", sentence: "The lecture was lucid and easy to follow."},
+            {word: "Precipitate", meaning: "To cause to happen suddenly or prematurely.", sentence: "The crisis was precipitated by a drop in oil prices."},
+            {word: "Erudite", meaning: "Having or showing great knowledge or learning.", sentence: "The professor was known for his erudite lectures."},
+            {word: "Opaque", meaning: "Not able to be seen through; not transparent.", sentence: "The windows were covered with an opaque film."},
+            {word: "Placate", meaning: "To make someone less angry or hostile.", sentence: "The manager tried to placate the angry customer."},
+            {word: "Prodigal", meaning: "Spending money or resources freely and recklessly.", sentence: "The prodigal son spent all his inheritance."},
+            {word: "Enigma", meaning: "A person or thing that is mysterious or difficult to understand.", sentence: "The disappearances remain an enigma to this day."},
+            {word: "Fervid", meaning: "Intensely enthusiastic or passionate.", sentence: "The crowd gave the speaker a fervid reception."},
+            {word: "Gullible", meaning: "Easily persuaded to believe something; credulous.", sentence: "He was so gullible he believed everything online."},
+            {word: "Laudable", meaning: "Deserving praise and commendation.", sentence: "Her efforts to help the homeless were laudable."},
+            {word: "Loquacious", meaning: "Tending to talk a great deal; talkative.", sentence: "The loquacious host kept the guests entertained."},
+            {word: "Pedant", meaning: "A person who is excessively concerned with minor details.", sentence: "The pedant corrected every small mistake."},
+            {word: "Terse", meaning: "Sparing in the use of words; abrupt.", sentence: "He gave a terse reply when asked about his plans."},
+            {word: "Vacillate", meaning: "To alternate or waver between different opinions.", sentence: "She vacillated between the two options for hours."},
+            {word: "Capricious", meaning: "Given to sudden and unaccountable changes of mood.", sentence: "The weather here is notoriously capricious."},
+            {word: "Laconic", meaning: "Using very few words.", sentence: "His laconic style of writing was very effective."},
+            {word: "Malleable", meaning: "Able to be hammered or pressed out of shape.", sentence: "Gold is a very malleable metal."},
+            {word: "Philanthropic", meaning: "Seeking to promote the welfare of others.", sentence: "The billionaire is known for philanthropic work."},
+            {word: "Soporific", meaning: "Tending to induce drowsiness or sleep.", sentence: "The lecture was so soporific that students fell asleep."},
+            {word: "Venerate", meaning: "To regard with great respect; revere.", sentence: "The saint is venerated by millions of people."},
+            {word: "Adulterate", meaning: "To render something poorer in quality by adding substances.", sentence: "The meat had been adulterated with cheap fillers."},
+            {word: "Aggrandize", meaning: "To increase the power, status, or wealth of.", sentence: "He sought to aggrandize himself at others' expense."},
+            {word: "Alacrity", meaning: "Brisk and cheerful readiness.", sentence: "She accepted the invitation with alacrity."},
+            {word: "Ameliorate", meaning: "To make something bad or unsatisfactory better.", sentence: "The laws were designed to ameliorate conditions."},
+            {word: "Anachronism", meaning: "A thing belonging to a period other than its own.", sentence: "Using a typewriter today is an anachronism."},
+            {word: "Articulate", meaning: "Having the ability to speak fluently and coherently.", sentence: "She is an articulate speaker who expresses ideas clearly."},
+            {word: "Banal", meaning: "So lacking in originality as to be obvious and boring.", sentence: "The movie's plot was banal and predictable."},
+            {word: "Bolster", meaning: "To support or strengthen; prop up.", sentence: "The new evidence helped to bolster his case."},
+            {word: "Chicanery", meaning: "The use of trickery to achieve a purpose.", sentence: "He was accused of using chicanery to win."},
+            {word: "Conspicuous", meaning: "Standing out so as to be clearly visible.", sentence: "The red sign was conspicuous from a distance."},
+            {word: "Derivative", meaning: "Imitative of the work of another person.", sentence: "His style is very derivative of Picasso's."},
+            {word: "Desiccate", meaning: "To remove the moisture from something.", sentence: "The hot sun desiccated the soil."},
+            {word: "Diaphanous", meaning: "Light, delicate, and translucent.", sentence: "The bride wore a diaphanous veil."},
+            {word: "Diffident", meaning: "Modest or shy because of a lack of confidence.", sentence: "The young man was diffident and rarely spoke."},
+            {word: "Disabuse", meaning: "To persuade someone that an belief is mistaken.", sentence: "I had to disabuse him of the notion that success is easy."},
+            {word: "Discrete", meaning: "Individually separate and distinct.", sentence: "The data is divided into discrete categories."},
+            {word: "Dissemble", meaning: "To conceal one's true motives or beliefs.", sentence: "He tried to dissemble his disappointment."},
+            {word: "Dogmatic", meaning: "Inclined to lay down principles as undeniably true.", sentence: "His dogmatic views made it hard to compromise."},
+            {word: "Eclectic", meaning: "Deriving ideas from a broad and diverse range.", sentence: "Her taste in music is very eclectic."},
+            {word: "Efficacy", meaning: "The ability to produce a desired or intended result.", sentence: "The efficacy of the new drug is yet to be proven."},
+            {word: "Elegy", meaning: "A poem of serious reflection, typically for the dead.", sentence: "The poet wrote an elegy for his late friend."},
+            {word: "Eloquent", meaning: "Fluent or persuasive in speaking or writing.", sentence: "The senator gave an eloquent speech."},
+            {word: "Enervate", meaning: "To cause someone to feel drained of energy.", sentence: "The hot weather enervated the workers."},
+            {word: "Ephemeral", meaning: "Lasting for a very short time.", sentence: "The beauty of cherry blossoms is ephemeral."},
+            {word: "Esoteric", meaning: "Understood by only a small number of people.", sentence: "The theories were too esoteric for most people."},
+            {word: "Eulogy", meaning: "A speech or writing that praises someone highly.", sentence: "The priest delivered a moving eulogy."},
+            {word: "Exacerbate", meaning: "To make a problem or negative feeling worse.", sentence: "The taxes will only exacerbate the crisis."},
+            {word: "Exculpate", meaning: "To show or declare that someone is not guilty.", sentence: "The evidence will exculpate the defendant."},
+            {word: "Exigent", meaning: "Pressing; demanding.", sentence: "The situation is exigent and requires action."},
+            {word: "Fawn", meaning: "To give a servile display of flattery.", sentence: "The courtiers fawned over the king."},
+            {word: "Florid", meaning: "Having a flushed complexion; or intricate.", sentence: "The author's florid style was hard to follow."},
+            {word: "Garrulous", meaning: "Excessively talkative, especially on trivial matters.", sentence: "The garrulous man told stories for hours."},
+            {word: "Gregarious", meaning: "Fond of company; sociable.", sentence: "He is a gregarious person who loves parties."},
+            {word: "Iconoclast", meaning: "A person who attacks cherished beliefs.", sentence: "The artist was an iconoclast in the art world."},
+            {word: "Imperturbable", meaning: "Unable to be upset or excited; calm.", sentence: "The captain remained imperturbable in the storm."},
+            {word: "Implacable", meaning: "Unable to be placated; relentless.", sentence: "The implacable enemy refused to negotiate."},
+            {word: "Inchoate", meaning: "Just begun and so not fully formed.", sentence: "The project is still in its inchoate stages."},
+            {word: "Ingenuous", meaning: "Innocent and unsuspecting.", sentence: "She gave an ingenuous smile that won them over."},
+            {word: "Inimical", meaning: "Tending to obstruct or harm.", sentence: "The policy was inimical to the poor."},
+            {word: "Innocuous", meaning: "Not harmful or offensive.", sentence: "The snake's bite was innocuous."},
+            {word: "Insipid", meaning: "Lacking flavor; lacking vigor or interest.", sentence: "The coffee was insipid and tasted like water."},
+            {word: "Intransigent", meaning: "Unwilling or refusing to change one's views.", sentence: "The two sides remained intransigent."},
+            {word: "Inundate", meaning: "To overwhelm someone with things to be dealt with.", sentence: "The company was inundated with complaints."},
+            {word: "Irascible", meaning: "Having or showing a tendency to be easily angered.", sentence: "The irascible man was always shouting."},
+            {word: "Lament", meaning: "To mourn a person's loss or death.", sentence: "The nation lamented the death of the president."},
+            {word: "Lavish", meaning: "Sumptuously rich, elaborate, or luxurious.", sentence: "The couple had a lavish wedding."},
+            {word: "Lethargic", meaning: "Affected by lethargy; sluggish.", sentence: "I felt lethargic all day and did nothing."},
+            {word: "Luminous", meaning: "Full of or shedding light; bright.", sentence: "The watch had a luminous dial."},
+            {word: "Magnanimous", meaning: "Generous or forgiving toward a rival.", sentence: "The winner was magnanimous in victory."},
+            {word: "Meticulous", meaning: "Showing great attention to detail.", sentence: "He is meticulous and never makes mistakes."},
+            {word: "Misanthrope", meaning: "A person who dislikes humankind.", sentence: "The hermit was a misanthrope who lived alone."},
+            {word: "Mitigate", meaning: "To make less severe or serious.", sentence: "The laws were designed to mitigate poverty."},
+            {word: "Mollify", meaning: "To appease the anger or anxiety of someone.", sentence: "The manager tried to mollify the customer."},
+            {word: "Monotony", meaning: "Lack of variety; tedious repetition.", sentence: "The monotony of the job was hard to bear."},
+            {word: "Naive", meaning: "Showing a lack of experience or judgment.", sentence: "She was naive to believe everything he said."},
+            {word: "Obdurate", meaning: "Stubbornly refusing to change one's opinion.", sentence: "The prisoner remained obdurate."},
+            {word: "Obsequious", meaning: "Obedient or attentive to an excessive degree.", sentence: "The waiter's obsequious behavior was annoying."},
+            {word: "Obstinate", meaning: "Stubbornly refusing to change one's course.", sentence: "He was obstinate and refused to admit wrong."},
+            {word: "Obviate", meaning: "To remove a need or difficulty.", sentence: "The tech will obviate the need for manual labor."},
+            {word: "Occlude", meaning: "To stop, close up, or obstruct.", sentence: "The thick clouds occluded the sun."},
+            {word: "Onerous", meaning: "Involving effort that is burdensome.", sentence: "The task was onerous and took all day."},
+            {word: "Opprobrium", meaning: "Harsh criticism or censure.", sentence: "His actions brought him much opprobrium."},
+            {word: "Ostentation", meaning: "Pretentious display intended to impress.", sentence: "His ostentation was evident in his luxury cars."},
+            {word: "Paradox", meaning: "A seemingly absurd statement that may be true.", sentence: "The paradox: the more he tried, the less he got."},
+            {word: "Paragon", meaning: "A person regarded as a perfect example.", sentence: "She was a paragon of virtue and kindness."},
+            {word: "Paucity", meaning: "The presence of something only in small quantities.", sentence: "There is a paucity of evidence to support him."},
+            {word: "Perfidious", meaning: "Deceitful and untrustworthy.", sentence: "The spy's perfidious actions led to arrests."},
+            {word: "Perfunctory", meaning: "Carried out with a minimum of effort.", sentence: "He gave a perfunctory nod as he passed."},
+            {word: "Permeate", meaning: "To spread throughout something; pervade.", sentence: "The smell of bread permeated the house."},
+            {word: "Philanthropy", meaning: "Generous donation of money to good causes.", sentence: "The billionaire is known for his philanthropy."},
+            {word: "Pithy", meaning: "Concise and forcefully expressive.", sentence: "The author's pithy style was very effective."},
+            {word: "Pragmatic", meaning: "Dealing with things sensibly and realistically.", sentence: "The manager took a pragmatic approach."},
+            {word: "Prevaricate", meaning: "To speak or act in an evasive way.", sentence: "The politician prevaricated about the scandal."}
+        ];
+
+        let streak = 0;
+        let learnedCount = 0;
+        let currentQuestion = {};
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playTone(freq, duration) {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.frequency.value = freq; gain.gain.value = 0.05;
+            osc.start(); setTimeout(() => osc.stop(), duration);
+        }
+
+        function toggleDarkMode() { document.body.classList.toggle('dark-mode'); }
+
+        function updateProgress() {
+            const percent = (learnedCount / words.length) * 100;
+            document.getElementById('progress-bar').style.width = percent + "%";
+        }
+
+        function showSection(section) {
+            document.getElementById('list-section').style.display = section === 'list' ? 'block' : 'none';
+            document.getElementById('quiz-section').style.display = section === 'quiz' ? 'block' : 'none';
+            if(section === 'quiz') loadNewQuestion();
+        }
+
+        function displayWords() {
+            const listContainer = document.getElementById('wordList');
+            listContainer.innerHTML = '';
+            words.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'word-card';
+                card.innerHTML = `<h3>${item.word}</h3><p>${item.meaning}</p><p style="font-style:italic; font-size:0.85rem; color:#888">"${item.sentence}"</p>`;
+                listContainer.appendChild(card);
+            });
+        }
+
+        function filterWords() {
+            const term = document.getElementById('searchBar').value.toLowerCase();
+            document.querySelectorAll('.word-card').forEach(card => {
+                card.style.display = card.innerText.toLowerCase().includes(term) ? 'block' : 'none';
+            });
+        }
+
+        function loadNewQuestion() {
+            document.getElementById('feedback').innerHTML = '';
+            document.getElementById('next-btn').style.display = 'none';
+            currentQuestion = words[Math.floor(Math.random() * words.length)];
+            document.getElementById('quiz-word').innerText = currentQuestion.word;
+
+            let options = [currentQuestion.meaning];
+            while(options.length < 4) {
+                let rand = words[Math.floor(Math.random() * words.length)].meaning;
+                if(!options.includes(rand)) options.push(rand);
+            }
+            options.sort(() => Math.random() - 0.5);
+
+            const container = document.getElementById('answer-options');
+            container.innerHTML = '';
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opt;
+                btn.onclick = () => {
+                    document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+                    if(opt === currentQuestion.meaning) {
+                        streak++;
+                        learnedCount = Math.min(learnedCount + 1, words.length);
+                        btn.classList.add('correct');
+                        playTone(800, 150);
+                        document.getElementById('feedback').innerHTML = `<span style="color:var(--success)">Correct! Streak: ${streak}x 🔥</span>`;
+                    } else {
+                        streak = 0;
+                        btn.classList.add('wrong');
+                        playTone(200, 300);
+                        document.getElementById('feedback').innerHTML = `<span style="color:var(--danger)">Wrong! Streak Reset.</span><br><small>The correct answer was: ${currentQuestion.meaning}</small>`;
+                    }
+                    document.getElementById('streak-count').innerText = streak;
+                    document.getElementById('next-btn').style.display = 'inline-block';
+                    updateProgress();
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        displayWords();
+        updateProgress();
+    </script>
+</body>
+</html>
